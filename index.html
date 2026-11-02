@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHESED PLANET</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#171b3d;color:white;
+ font-family:"Arial",sans-serif;overflow:hidden;
+}
+button{font:inherit;cursor:pointer}
+#world{
+ position:relative;width:100vw;height:100dvh;overflow:hidden;
+ background:
+ radial-gradient(ellipse at 50% 40%,#665d9c 0%,#34345f 42%,#151b3c 100%);
+}
+.stars{
+ position:absolute;inset:0;
+ background-image:
+ radial-gradient(2px 2px at 10% 20%,#fff,transparent),
+ radial-gradient(2px 2px at 30% 70%,#fff,transparent),
+ radial-gradient(2px 2px at 80% 25%,#fff,transparent),
+ radial-gradient(2px 2px at 65% 80%,#fff,transparent),
+ radial-gradient(3px 3px at 50% 12%,#ffe9b5,transparent);
+ background-size:220px 180px;
+}
+.brand{
+ position:absolute;top:22px;left:24px;z-index:5;
+ display:flex;align-items:center;gap:12px;
+ text-shadow:0 2px 8px #15142b;
+}
+.logo{font-size:42px}
+.brand strong{font-size:17px;letter-spacing:2px}
+.brand small{display:block;font-size:10px;letter-spacing:2px;margin-top:4px}
+.tagline{border-left:1px solid #ffffff88;padding-left:18px;
+ letter-spacing:3px;font-size:13px}
+.planet{
+ position:absolute;width:min(1120px,125vw);height:min(610px,72vw);
+ min-height:420px;left:50%;top:53%;
+ transform:translate(-50%,-50%);
+ border-radius:50%;
+ background:linear-gradient(145deg,#a8a0c8,#6f719b 48%,#414c75);
+ box-shadow:0 45px 0 #343e65,0 65px 35px #070d29aa,
+ inset 0 15px 30px #ffffff55;
+}
+.planet:before{
+ content:"";position:absolute;inset:5% 3%;
+ border-radius:50%;
+ background:
+ radial-gradient(ellipse at 25% 35%,#a7b88c 0 13%,transparent 14%),
+ radial-gradient(ellipse at 75% 55%,#91a77e 0 19%,transparent 20%),
+ radial-gradient(ellipse at 48% 75%,#b4b58b 0 16%,transparent 17%),
+ radial-gradient(ellipse at 52% 35%,#9eae89 0 18%,transparent 19%),
+ linear-gradient(140deg,#c4b4ad,#788e91 60%,#596c83);
+ opacity:.95;
+}
+.planet:after{
+ content:"";position:absolute;inset:0;border-radius:50%;
+ border:3px solid #e4d8d9aa;
+ box-shadow:inset 0 -25px 35px #25294b66;
+ pointer-events:none;
+}
+.cloud{
+ position:absolute;font-size:clamp(35px,7vw,80px);
+ opacity:.8;filter:drop-shadow(0 8px 8px #121638);
+ animation:float 6s ease-in-out infinite alternate;
+}
+.c1{left:4%;top:23%}.c2{right:5%;top:18%;animation-delay:2s}
+.c3{left:16%;bottom:8%;animation-delay:1s}
+.c4{right:18%;bottom:9%;animation-delay:3s}
+@keyframes float{to{transform:translateY(-15px)}}
+.place{
+ position:absolute;z-index:2;transform:translate(-50%,-50%);
+ border:1px solid #fff9;background:#292441b9;color:white;
+ padding:9px 14px;border-radius:24px;
+ box-shadow:0 5px 14px #16122b66;
+ backdrop-filter:blur(5px);white-space:nowrap;
+ font-size:clamp(11px,1.8vw,15px);
+}
+.place:active{background:#bba4d9;color:#231d43}
+.castle{
+ position:absolute;left:50%;top:27%;transform:translate(-50%,-50%);
+ font-size:clamp(85px,15vw,150px);
+ filter:drop-shadow(0 12px 9px #2b234c88);
+}
+.castle-title{
+ position:absolute;left:50%;top:39%;transform:translateX(-50%);
+ background:#fff0cf;color:#4a3654;padding:7px 18px;
+ border-radius:20px;font-size:12px;white-space:nowrap;
+}
+#character{
+ position:absolute;z-index:4;left:50%;top:66%;
+ transform:translate(-50%,-50%);
+ font-size:44px;filter:drop-shadow(0 5px 4px #24203b);
+ transition:left .16s,top .16s;
+ pointer-events:none;
+}
+#character:after{
+ content:"";position:absolute;bottom:-4px;left:8px;
+ width:28px;height:8px;border-radius:50%;
+ background:#26213b66;
+}
+#info{
+ position:absolute;z-index:10;left:50%;top:50%;
+ transform:translate(-50%,-50%);
+ width:min(340px,88vw);padding:25px;
+ border:1px solid #e9d6ff88;border-radius:22px;
+ background:#252342ed;text-align:center;
+ box-shadow:0 15px 50px #090b25aa;
+ display:none;
+}
+#info h2{margin:5px}
+#info p{line-height:1.7;color:#e4dced;font-size:14px}
+#info button{
+ border:0;border-radius:20px;padding:10px 24px;
+ background:#e9d4ae;color:#40334d;
+}
+.bottom{
+ position:absolute;z-index:6;bottom:18px;left:50%;
+ transform:translateX(-50%);
+ display:flex;gap:4px;padding:8px;
+ background:#292443c9;border:1px solid #ffffff55;
+ border-radius:24px;backdrop-filter:blur(10px);
+}
+.bottom button{
+ min-width:65px;border:0;background:transparent;color:white;
+ padding:7px 9px;border-radius:16px;font-size:12px;
+}
+.bottom button span{display:block;font-size:24px;margin-bottom:4px}
+.bottom button.active{background:#d9c1e9;color:#33264c}
+.move{
+ position:absolute;z-index:7;right:20px;bottom:110px;
+ display:grid;grid-template-columns:42px 42px 42px;
+ grid-template-rows:42px 42px 42px;gap:3px;
+}
+.move button{
+ border:1px solid #ffffff66;border-radius:12px;
+ background:#292443aa;color:white;font-size:20px;
+}
+.up{grid-column:2}.left{grid-column:1;grid-row:2}
+.down{grid-column:2;grid-row:2}
+.right{grid-column:3;grid-row:2}
+.hint{
+ position:absolute;bottom:28px;left:22px;z-index:5;
+ font-size:12px;color:#f4e6ff;background:#39304eaa;
+ padding:10px 14px;border-radius:18px;
+}
+@media(max-width:600px){
+ .planet{width:135vw;height:520px;top:49%}
+ .brand{top:14px;left:14px}
+ .tagline{display:none}
+ .castle{top:28%}
+ .bottom{bottom:12px;width:94%;justify-content:space-around}
+ .bottom button{min-width:0;flex:1;padding:7px 2px}
+ .hint{bottom:94px;left:12px;font-size:10px}
+ .move{right:12px;bottom:95px;transform:scale(.85);transform-origin:bottom right}
+}
+</style>
+</head>
+<body>
+<div id="world">
+ <div class="stars"></div>
+ <div class="brand">
+  <div class="logo">🪐</div>
+  <div><strong>헤세드플래닛</strong><small>CHESED PLANET</small></div>
+  <div class="tagline">find your light ✦</div>
+ </div>
+
+ <div class="cloud c1">☁️</div>
+ <div class="cloud c2">☁️</div>
+ <div class="cloud c3">☁️</div>
+ <div class="cloud c4">☁️</div>
+
+ <div class="planet">
+  <div class="castle">🏰</div>
+  <div class="castle-title">✦ find your light ✦</div>
+
+  <button class="place" style="left:23%;top:30%"
+   onclick="visit('에덴동산','🌳','하나님이 창조하신 아름다운 동산을 탐험해 보세요.')">🌿 에덴동산 ›</button>
+
+  <button class="place" style="left:69%;top:39%"
+   onclick="visit('예배당','✝️','말씀과 찬양으로 하나님을 만나는 공간입니다.')">✝ 예배당 ›</button>
+
+  <button class="place" style="left:88%;top:43%"
+   onclick="visit('별빛 관측소','🔭','별과 우주를 바라보며 창조의 신비를 발견해요.')">⭐ 별빛 관측소 ›</button>
+
+  <button class="place" style="left:84%;top:62%"
+   onclick="visit('헤세드 스토어','🛍️','헤세드플래닛의 저널링 제품을 만나보세요.')">🛍 헤세드 스토어 ›</button>
+
+  <button class="place" style="left:15%;top:62%"
+   onclick="visit('노아의 방주','🚢','하나님의 약속과 은혜를 기억하는 장소입니다.')">🚢 노아의 방주 ›</button>
+
+  <button class="place" style="left:32%;top:79%"
+   onclick="visit('오병이어의 기적','🐟','작은 것을 통해 큰 은혜를 베푸신 이야기를 만나보세요.')">🐟 오병이어의 기적 ›</button>
+
+  <button class="place" style="left:67%;top:78%"
+   onclick="visit('목자의 정원','🐑','쉼과 평안을 누리는 작은 정원입니다.')">📖 목자의 정원 ›</button>
+
+  <button class="place" style="left:50%;top:13%"
+   onclick="visit('시온산','⛰️','믿음의 여정을 따라 시온산에 올라가 보세요.')">⛰️ 시온산 ›</button>
+
+  <div id="character">🧑🏻‍🚀</div>
+ </div>
+
+ <div class="hint">✦ 방향키 또는 아래 버튼으로 이동해 보세요</div>
+
+ <div class="move">
+  <button class="up" onclick="move(0,-3)">▲</button>
+  <button class="left" onclick="move(-3,0)">◀</button>
+  <button class="down" onclick="move(0,3)">▼</button>
+  <button class="right" onclick="move(3,0)">▶</button>
+ </div>
+
+ <div class="bottom">
+  <button class="active" onclick="visit('홈','🏠','헤세드플래닛에 오신 것을 환영합니다.')"><span>⌂</span>홈</button>
+  <button onclick="visit('지도','🗺️','행성의 여러 장소를 둘러보세요.')"><span>📍</span>지도</button>
+  <button onclick="visit('인벤토리','🎒','앞으로 모험하며 아이템을 모을 수 있어요.')"><span>🎒</span>인벤토리</button>
+  <button onclick="visit('저널','📖','오늘의 말씀과 묵상을 기록하는 공간입니다.')"><span>📖</span>저널</button>
+  <button onclick="visit('이벤트','🎁','헤세드플래닛의 특별한 소식을 만나보세요.')"><span>🎁</span>이벤트</button>
+ </div>
+
+ <div id="info">
+  <div id="emoji" style="font-size:42px"></div>
+  <h2 id="title"></h2>
+  <p id="description"></p>
+  <button onclick="closeInfo()">돌아가기</button>
+ </div>
+</div>
+
+<script>
+let x=50,y=66;
+const character=document.getElementById("character");
+
+function move(dx,dy){
+ x=Math.max(5,Math.min(95,x+dx));
+ y=Math.max(8,Math.min(90,y+dy));
+ character.style.left=x+"%";
+ character.style.top=y+"%";
+}
+document.addEventListener("keydown",e=>{
+ if(["ArrowUp","w","W"].includes(e.key))move(0,-2);
+ if(["ArrowDown","s","S"].includes(e.key))move(0,2);
+ if(["ArrowLeft","a","A"].includes(e.key))move(-2,0);
+ if(["ArrowRight","d","D"].includes(e.key))move(2,0);
+});
+function visit(name,emoji,description){
+ document.getElementById("title").textContent=name;
+ document.getElementById("emoji").textContent=emoji;
+ document.getElementById("description").textContent=description;
+ document.getElementById("info").style.display="block";
+}
+function closeInfo(){
+ document.getElementById("info").style.display="none";
+}
+</script>
+</body>
+</html>
